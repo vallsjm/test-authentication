@@ -47,7 +47,7 @@ final class LoginTest extends LoginCase
         ($this->login)('chema@elcurriculum.com', 'j0sem^la');
     }
 
-    public function testUserBlocked()
+    public function testUserIsBlocked()
     {
         $userRepositoryMock = $this->createMock(UserRepository::class);
         $userRepositoryMock->method('findByEmail')
