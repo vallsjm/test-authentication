@@ -3,13 +3,19 @@
 ### Installation setup
 
 Requirements:
-    - "php": "^7.3"
+    - "php": "^7.4"
 
 Installation:
-    - php phars/composer.phar install (To install composer dependencies)
+```sh
+$ docker-compose build
+$ docker-compose up -d
+$ docker-compose run --rm php-fpm php ./phars/composer.phar install
+```
 
 Test execution:
-    - ./vendor/bin/phpunit tests
+```sh
+$ docker-compose run --rm php-fpm ./vendor/bin/phpunit tests
+```
 
 ### Description
 
