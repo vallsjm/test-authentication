@@ -6,7 +6,7 @@ namespace App\Entity\User\Exception;
 
 final class UserIsBlocked extends \InvalidArgumentException
 {
-    public static function create(): UserNotFound
+    public static function create(): UserIsBlocked
     {
         return new self('User login has more than three consecutive fails.');
     }

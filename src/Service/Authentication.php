@@ -5,6 +5,9 @@ declare(strict_types=1);
 
 namespace App\Service;
 
+use App\Entity\User\User;
+use App\Entity\User\UserPassword;
+
 final class Authentication
 {
     public function authenticate(User $user, UserPassword $userPassword): bool
@@ -13,7 +16,7 @@ final class Authentication
             $user->resetLoginCounter();
             return true;
         } else {
-            $user->incrementLoginCounter();
+            $user->incLoginCounter();
         }
         return false;
     }

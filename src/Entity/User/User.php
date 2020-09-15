@@ -32,12 +32,12 @@ final class User
         return $this->password;
     }
 
-    public function isBlocked(): int
+    public function isBlocked(): bool
     {
-        return $this->loginCounter > 3;
+        return $this->loginCounter >= 3;
     }
 
-    public function incrementLoginCounter(): void
+    public function incLoginCounter(): void
     {
         $this->loginCounter++;
     }

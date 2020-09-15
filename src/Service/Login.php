@@ -35,6 +35,6 @@ final class Login
             throw UserIsBlocked::create();
         }
 
-        return $this->authenticate($user, $userPassword);
+        return $this->auth->authenticate($user, $userPassword);
     }
 }

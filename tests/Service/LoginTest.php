@@ -6,9 +6,14 @@ namespace Tests\App\Service;
 
 use Tests\App\Service\LoginCase;
 use App\Entity\User\Exception\UserNotFound;
+use App\Entity\User\Exception\UserIsBlocked;
 use App\Entity\User\Exception\PasswordInvalidLength;
 use App\Entity\User\Exception\PasswordNotContainsNumber;
 use App\Entity\User\Exception\PasswordNotContainsSpecialChar;
+use App\Entity\User\User;
+use App\Entity\User\UserRepository;
+use App\Service\Authentication;
+use App\Service\Login;
 
 final class LoginTest extends LoginCase
 {
@@ -40,6 +45,32 @@ final class LoginTest extends LoginCase
     {
         $this->expectException(UserNotFound::class);
         ($this->login)('chema@elcurriculum.com', 'j0sem^la');
+    }
+
+    public function testUserBlocked()
+    {
+        $userRepositoryMock = $this->createMock(UserRepository::class);
+        $userRepositoryMock->method('findByEmail')
+                     ->willReturn(User::create('chema@elcurriculum.com', 'j0sem^la'));
+
+        $auth = new Authentication();
+        $login = new Login($userRepositoryMock, $auth);
+        $login('chema@elcurriculum.com', 'j0sem^la1');
+        $login('chema@elcurriculum.com', 'j0sem^la2');
+        $login('chema@elcurriculum.com', 'j0sem^la3');
+        $this->expectException(UserIsBlocked::class);
+        $login('chema@elcurriculum.com', 'j0sem^la');
+    }
+
+    public function testLoginSuccess()
+    {
+        $userRepositoryMock = $this->createMock(UserRepository::class);
+        $userRepositoryMock->method('findByEmail')
+                     ->willReturn(User::create('chema@elcurriculum.com', 'j0sem^la'));
+
+        $auth = new Authentication();
+        $login = new Login($userRepositoryMock, $auth);
+        $this->assertTrue($login('chema@elcurriculum.com', 'j0sem^la'));
     }
 
 }
